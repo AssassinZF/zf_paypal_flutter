@@ -1,8 +1,8 @@
 name: zf_paypal_flutter
 description: A new flutter plugin project.
 version: 0.0.1
-author: 
-homepage:
+author: kris <zhanfengliu.cd@gmail.com>
+homepage: https://github.com/AssassinZF/zf_paypal_flutter
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
