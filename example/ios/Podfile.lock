@@ -1,11 +1,31 @@
 PODS:
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
+  - AFNetworking/NSURLSession (3.2.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
+    - AFNetworking/NSURLSession
   - Flutter (1.0.0)
   - zf_paypal_flutter (0.0.1):
+    - AFNetworking
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios-release`)
   - zf_paypal_flutter (from `.symlinks/plugins/zf_paypal_flutter/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
 
 EXTERNAL SOURCES:
   Flutter:
@@ -14,8 +34,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/zf_paypal_flutter/ios"
 
 SPEC CHECKSUMS:
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  zf_paypal_flutter: 59666aa5d5df1c4f65375b42f191c1c14b3f6ccb
+  zf_paypal_flutter: e4d10c60cd45299bba4f7a6d0b03557f4f8faee6
 
 PODFILE CHECKSUM: 64b2109b760ac9073c864e2a8278e6464efaa219
 

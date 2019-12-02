@@ -1,4 +1,6 @@
 #import "ZfPaypalFlutterPlugin.h"
+#import <BraintreeCore.h>
+#import "BraintreeDropIn.h"
 
 @implementation ZfPaypalFlutterPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
