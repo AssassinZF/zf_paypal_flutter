@@ -47,9 +47,19 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
+        body: Column(
+          children: <Widget>[
+             Text('Running on: $_platformVersion\n'),
+             FlatButton(
+               child: Text('PayPal支付'),
+               onPressed: (){
+                 ZfPaypalFlutter().paypal().then((res){
+                   print('>>>支付结果:' + res);
+                 });
+               },
+             )
+          ],
+        )
       ),
     );
   }

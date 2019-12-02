@@ -15,4 +15,9 @@ class ZfPaypalFlutter {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
+
+  Future<String> paypal() async {
+    final String version = await _channel.invokeMethod('paypal');
+    return version;
+  }
 }

@@ -14,30 +14,66 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
+  - Braintree/Card (4.23.0):
+    - Braintree/Core
+  - Braintree/Core (4.23.0)
+  - Braintree/PaymentFlow (4.23.0):
+    - Braintree/Card
+    - Braintree/Core
+    - Braintree/PayPalOneTouch
+  - Braintree/PayPal (4.23.0):
+    - Braintree/Core
+    - Braintree/PayPalOneTouch
+  - Braintree/PayPalDataCollector (4.23.0):
+    - Braintree/Core
+    - Braintree/PayPalUtils
+  - Braintree/PayPalOneTouch (4.23.0):
+    - Braintree/Core
+    - Braintree/PayPalDataCollector
+    - Braintree/PayPalUtils
+  - Braintree/PayPalUtils (4.23.0)
+  - Braintree/UnionPay (4.23.0):
+    - Braintree/Card
+    - Braintree/Core
+  - BraintreeDropIn (7.1.0):
+    - BraintreeDropIn/DropIn (= 7.1.0)
+  - BraintreeDropIn/DropIn (7.1.0):
+    - Braintree/Card (~> 4.23)
+    - Braintree/Core (~> 4.23)
+    - Braintree/PaymentFlow (~> 4.23)
+    - Braintree/PayPal (~> 4.23)
+    - Braintree/UnionPay (~> 4.23)
+    - BraintreeDropIn/UIKit
+  - BraintreeDropIn/UIKit (7.1.0)
   - Flutter (1.0.0)
   - zf_paypal_flutter (0.0.1):
     - AFNetworking
+    - BraintreeDropIn
     - Flutter
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios-release`)
+  - Flutter (from `.symlinks/flutter/ios`)
   - zf_paypal_flutter (from `.symlinks/plugins/zf_paypal_flutter/ios`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
+    - Braintree
+    - BraintreeDropIn
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: ".symlinks/flutter/ios-release"
+    :path: ".symlinks/flutter/ios"
   zf_paypal_flutter:
     :path: ".symlinks/plugins/zf_paypal_flutter/ios"
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  Braintree: b5841b9b1c1dadc86959db3e29d36099b67f91bf
+  BraintreeDropIn: a019fcbf4edb87c55780ec01d5db3998b19164ce
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  zf_paypal_flutter: e4d10c60cd45299bba4f7a6d0b03557f4f8faee6
+  zf_paypal_flutter: 958729b269a764ee612a314561a21bf6a108d294
 
-PODFILE CHECKSUM: 64b2109b760ac9073c864e2a8278e6464efaa219
+PODFILE CHECKSUM: f49f6685c37f93de1e6ecd4a1c9b7d66e5817e52
 
 COCOAPODS: 1.7.5
