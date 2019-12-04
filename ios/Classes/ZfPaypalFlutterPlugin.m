@@ -1,20 +1,27 @@
 #import "ZfPaypalFlutterPlugin.h"
 #import "BraintreeCore.h"
 #import "BraintreeDropIn.h"
+#import "BraintreePayPal.h"
 
-@implementation ZfPaypalFlutterPlugin{
+@interface ZfPaypalFlutterPlugin()<BTViewControllerPresentingDelegate,BTAppSwitchDelegate>
+{
     UIViewController *_viewController;
     FlutterResult _callbackResult;
+    BTAPIClient * _braintreeClient;
 }
+@end
+
+@implementation ZfPaypalFlutterPlugin
+
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  FlutterMethodChannel* channel = [FlutterMethodChannel
-      methodChannelWithName:@"zf_paypal_flutter"
-            binaryMessenger:[registrar messenger]];
+    FlutterMethodChannel* channel = [FlutterMethodChannel
+                                     methodChannelWithName:@"zf_paypal_flutter"
+                                     binaryMessenger:[registrar messenger]];
     
     UIViewController *vc =
     [UIApplication sharedApplication].delegate.window.rootViewController;
-  ZfPaypalFlutterPlugin* instance = [[ZfPaypalFlutterPlugin alloc] initWithViewController:vc];
-  [registrar addMethodCallDelegate:instance channel:channel];
+    ZfPaypalFlutterPlugin* instance = [[ZfPaypalFlutterPlugin alloc] initWithViewController:vc];
+    [registrar addMethodCallDelegate:instance channel:channel];
 }
 
 - (instancetype)initWithViewController:(UIViewController *)viewController {
@@ -27,15 +34,59 @@
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     _callbackResult = result;
-  if ([@"getPlatformVersion" isEqualToString:call.method]) {
-    result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
-  }else if([@"paypal" isEqualToString:call.method]){
-      NSString *authorizationKey = @"sandbox_x635tcj9_s9794jzs2g9fc6qy";//sandbix env
-      BTAPIClient *apiClient = [[BTAPIClient alloc] initWithAuthorization:authorizationKey];
-      [self showDropIn:authorizationKey];
-  } else {
-    result(FlutterMethodNotImplemented);
-  }
+    if ([@"getPlatformVersion" isEqualToString:call.method]) {
+        result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
+    }else if([@"paypal" isEqualToString:call.method]){
+        NSString *authorizationKey = @"sandbox_x635tcj9_s9794jzs2g9fc6qy";//sandbix env
+        _braintreeClient = [[BTAPIClient alloc] initWithAuthorization:authorizationKey];
+        //      [self showDropIn:authorizationKey];
+        [self customPayPalButtonTapped:call.arguments];
+    } else {
+        result(FlutterMethodNotImplemented);
+    }
+}
+
+- (void)customPayPalButtonTapped:(NSDictionary *)payParam {
+    
+    
+    BTPayPalDriver *payPalDriver = [[BTPayPalDriver alloc] initWithAPIClient:_braintreeClient];
+    payPalDriver.viewControllerPresentingDelegate = self;
+    payPalDriver.appSwitchDelegate = self; // Optional
+    
+    // Start the Vault flow, or...
+//    [payPalDriver authorizeAccountWithCompletion:^(BTPayPalAccountNonce *tokenizedPayPalAccount, NSError *error) {
+//        NSLog(@"...");
+//    }];
+    
+    // ...start the Checkout flow
+    BTPayPalRequest *request = [[BTPayPalRequest alloc] initWithAmount:[NSString stringWithFormat:@"%f",[payParam[@"Amount"] doubleValue]]];
+    request.currencyCode = @"USD"; // Optional; see BTPayPalRequest.h for other options
+
+    [payPalDriver requestOneTimePayment:request
+                             completion:^(BTPayPalAccountNonce *tokenizedPayPalAccount, NSError *error) {
+                                 NSLog(@"...");
+                                 if (error != nil) {
+                                     self->_callbackResult(error.description);
+                                 }else if (tokenizedPayPalAccount != nil){
+                                     NSLog(@"Got a nonce: %@", tokenizedPayPalAccount.nonce);
+                                     self->_callbackResult(tokenizedPayPalAccount.nonce);
+                                 }else{
+                                     self->_callbackResult(@"支付取消");
+                                 }
+                             }];
+}
+
+#pragma mark - BTViewControllerPresentingDelegate
+// Required
+- (void)paymentDriver:(id)paymentDriver
+requestsPresentationOfViewController:(UIViewController *)viewController {
+    [_viewController presentViewController:viewController animated:YES completion:nil];
+}
+
+// Required
+- (void)paymentDriver:(id)paymentDriver
+requestsDismissalOfViewController:(UIViewController *)viewController {
+    [viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)showDropIn:(NSString *)clientTokenOrTokenizationKey {
@@ -54,9 +105,44 @@
             // result.paymentIcon
             // result.paymentDescription
         }
+        [controller dismissViewControllerAnimated:YES completion:nil];
     }];
     [_viewController presentViewController:dropIn animated:YES completion:nil];
 }
+
+#pragma mark - BTAppSwitchDelegate
+
+// Optional - display and hide loading indicator UI
+- (void)appSwitcherWillPerformAppSwitch:(id)appSwitcher {
+    
+    [self showLoadingUI];
+    // You may also want to subscribe to UIApplicationDidBecomeActiveNotification
+    // to dismiss the UI when a customer manually switches back to your app since
+    // the payment button completion block will not be invoked in that case (e.g.
+    // customer switches back via iOS Task Manager)
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideLoadingUI:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+}
+
+- (void)appSwitcherWillProcessPaymentInfo:(id)appSwitcher {
+    [self hideLoadingUI:nil];
+}
+
+#pragma mark - Private methods
+
+- (void)showLoadingUI {
+    
+}
+
+- (void)hideLoadingUI:(NSNotification *)notification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidBecomeActiveNotification
+                                                  object:nil];
+    
+}
+
 
 - (void)postNonceToServer:(NSString *)paymentMethodNonce {
     // Update URL with your server

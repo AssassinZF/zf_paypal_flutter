@@ -53,8 +53,12 @@ class _MyAppState extends State<MyApp> {
              FlatButton(
                child: Text('PayPal支付'),
                onPressed: (){
-                 ZfPaypalFlutter().paypal().then((res){
+                 ZfPaypalFlutter().paypal({'Amount':100}).then((res){
                    print('>>>支付结果:' + res);
+
+                   if (res != null) {
+                     
+                   }
                  });
                },
              )

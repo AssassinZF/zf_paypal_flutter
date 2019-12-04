@@ -16,8 +16,9 @@ class ZfPaypalFlutter {
     return version;
   }
 
-  Future<String> paypal() async {
-    final String version = await _channel.invokeMethod('paypal');
+//支付金额（美元）订单id 手续费
+  Future<String> paypal(Map<String,dynamic> payParam) async {
+    final String version = await _channel.invokeMethod('paypal',payParam);
     return version;
   }
 }
