@@ -37,7 +37,7 @@
     if ([@"getPlatformVersion" isEqualToString:call.method]) {
         result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
     }else if([@"paypal" isEqualToString:call.method]){
-        NSString *authorizationKey = @"sandbox_x635tcj9_s9794jzs2g9fc6qy";//sandbix env
+        NSString *authorizationKey = @"sandbox_mf5wtngr_2sk4yrpjxtsx3zwc";//sandbix env
         _braintreeClient = [[BTAPIClient alloc] initWithAuthorization:authorizationKey];
         //      [self showDropIn:authorizationKey];
         [self customPayPalButtonTapped:call.arguments];
@@ -61,7 +61,8 @@
     // ...start the Checkout flow
     BTPayPalRequest *request = [[BTPayPalRequest alloc] initWithAmount:[NSString stringWithFormat:@"%f",[payParam[@"Amount"] doubleValue]]];
     request.currencyCode = @"USD"; // Optional; see BTPayPalRequest.h for other options
-
+//    request.merchantAccountId = @"2sk4yrpjxtsx3zwc";
+    request.localeCode = @"zh_CN";
     [payPalDriver requestOneTimePayment:request
                              completion:^(BTPayPalAccountNonce *tokenizedPayPalAccount, NSError *error) {
                                  NSLog(@"...");

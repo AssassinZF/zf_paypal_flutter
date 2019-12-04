@@ -1,19 +1,4 @@
 PODS:
-  - AFNetworking (3.2.1):
-    - AFNetworking/NSURLSession (= 3.2.1)
-    - AFNetworking/Reachability (= 3.2.1)
-    - AFNetworking/Security (= 3.2.1)
-    - AFNetworking/Serialization (= 3.2.1)
-    - AFNetworking/UIKit (= 3.2.1)
-  - AFNetworking/NSURLSession (3.2.1):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.2.1)
-  - AFNetworking/Security (3.2.1)
-  - AFNetworking/Serialization (3.2.1)
-  - AFNetworking/UIKit (3.2.1):
-    - AFNetworking/NSURLSession
   - Braintree/Card (4.23.0):
     - Braintree/Core
   - Braintree/Core (4.23.0)
@@ -47,32 +32,29 @@ PODS:
   - BraintreeDropIn/UIKit (7.1.0)
   - Flutter (1.0.0)
   - zf_paypal_flutter (0.0.1):
-    - AFNetworking
     - BraintreeDropIn
     - Flutter
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios-release`)
+  - Flutter (from `.symlinks/flutter/ios`)
   - zf_paypal_flutter (from `.symlinks/plugins/zf_paypal_flutter/ios`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - AFNetworking
     - Braintree
     - BraintreeDropIn
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: ".symlinks/flutter/ios-release"
+    :path: ".symlinks/flutter/ios"
   zf_paypal_flutter:
     :path: ".symlinks/plugins/zf_paypal_flutter/ios"
 
 SPEC CHECKSUMS:
-  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   Braintree: b5841b9b1c1dadc86959db3e29d36099b67f91bf
   BraintreeDropIn: a019fcbf4edb87c55780ec01d5db3998b19164ce
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  zf_paypal_flutter: 958729b269a764ee612a314561a21bf6a108d294
+  zf_paypal_flutter: 74314ebb5bd7cf4c53cec49b97f4a5fb3192d61c
 
 PODFILE CHECKSUM: f49f6685c37f93de1e6ecd4a1c9b7d66e5817e52
 
