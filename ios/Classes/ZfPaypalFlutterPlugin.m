@@ -61,7 +61,7 @@
     // ...start the Checkout flow
     BTPayPalRequest *request = [[BTPayPalRequest alloc] initWithAmount:[NSString stringWithFormat:@"%f",[payParam[@"Amount"] doubleValue]]];
     request.currencyCode = @"USD"; // Optional; see BTPayPalRequest.h for other options
-//    request.merchantAccountId = @"2sk4yrpjxtsx3zwc";
+    request.merchantAccountId = @"2sk4yrpjxtsx3zwc";
     request.localeCode = @"zh_CN";
     [payPalDriver requestOneTimePayment:request
                              completion:^(BTPayPalAccountNonce *tokenizedPayPalAccount, NSError *error) {
