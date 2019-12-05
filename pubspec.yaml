@@ -1,6 +1,6 @@
-name: zf_paypal_flutter
+name: zf_paypal_flutter_ch
 description: A new flutter plugin project.
-version: 0.0.3
+version: 0.0.4
 author: kris <zhanfengliu.cd@gmail.com>
 homepage: https://github.com/AssassinZF/zf_paypal_flutter
 
